@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ad-services-config xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Point at the specific Ad SDK you’re using: -->
-    <ad-service android:name="com.google.android.gms.ads.AdManager"/>
-</ad-services-config>

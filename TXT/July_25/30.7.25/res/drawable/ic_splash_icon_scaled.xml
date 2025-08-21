@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<scale xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@mipmap/ic_aim_icon_foreground"
-    android:scaleWidth="125%"
-    android:scaleHeight="125%"
-    android:gravity="center"/>   <!-- 75% of container height -->
