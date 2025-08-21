@@ -1,0 +1,322 @@
+override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
+        // compute banner height in px
+        val bannerHeightPx = AdSize.BANNER.getHeightInPixels(context).toFloat()
+
+        if (showHoles) {
+                val holePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.BLACK
+                style = Paint.Style.STROKE
+                strokeWidth = 8f
+                strokeCap = Paint.Cap.ROUND
+            }
+            val holeRadius = 12f
+
+            holePositions.forEachIndexed { i, (fx, fy) ->
+                if (currentLevel >= 16 && i >= ballSpawnIndex) return@forEachIndexed
+
+                val x = if (holePositionsAbsolute) fx else fx * width
+                // shift down by the banner thickness
+                val y = if (holePositionsAbsolute) fy else fy * height
+
+                canvas.drawCircle(x, y, holeRadius, holePaint)
+            }
+        }
+
+        // --- DRAW OPTIONS BUTTON & DROPDOWN at top-right ---
+        if (!startDialogShowing && !levelFailed && !levelCompleted) {
+            // 1) Metrics & sizing
+            val margin    = 16f                                    // margin to screen edges
+            val padding   = 20f                                    // inside button padding
+            val textSize  = 62f                                    // your existing textSize
+            val textLabel = "Options"
+
+            // Paints for text
+            val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color     = Color.WHITE
+                this.textSize = textSize
+                typeface  = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style     = Paint.Style.FILL
+                textAlign = Paint.Align.CENTER
+            }
+            val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color       = Color.BLACK
+                this.textSize   = textSize
+                typeface    = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style       = Paint.Style.STROKE
+                strokeWidth = 4f
+                textAlign   = Paint.Align.CENTER
+            }
+
+            // Measure text width
+            val textWidth = strokePaint.measureText(textLabel)
+            val btnWidth  = textWidth + padding * 2
+            val btnHeight = textSize + padding
+
+            // Compute the RectF for the button in top-right
+            optionsButtonRect.set(
+                width  - margin - btnWidth, // left
+                margin,                     // top
+                width  - margin,            // right
+                margin + btnHeight          // bottom
+            )
+
+            // Background paint
+            val bgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color     = Color.DKGRAY
+                isAntiAlias = true
+            }
+
+            // Draw the rounded-rect button
+            canvas.drawRoundRect(optionsButtonRect, 12f, 12f, bgPaint)
+
+            // Draw the label (stroke then fill), vertically centered
+            val textX = optionsButtonRect.centerX()
+            val textY = optionsButtonRect.centerY() + textSize/3
+            canvas.drawText(textLabel, textX, textY, strokePaint)
+            canvas.drawText(textLabel, textX, textY, fillPaint)
+
+            // 2) If expanded, draw the dropdown *below* the button
+            if (optionsExpanded) {
+                val itemHeight = 80f
+                val spacing    = 8f
+                var topY       = optionsButtonRect.bottom + spacing
+
+                for (label in optionsList) {
+                    // Dropdown item rect, same width as button
+                    val itemRect = RectF(
+                        optionsButtonRect.left,
+                        topY,
+                        optionsButtonRect.right,
+                        topY + itemHeight
+                    )
+
+                    // Background for each item
+                    val itemBg = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                        color = Color.GRAY
+                        alpha = 220
+                    }
+                    canvas.drawRoundRect(itemRect, 12f, 12f, itemBg)
+
+                    // Text paints for items (right-aligned)
+                    val itemFill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                        color     = Color.WHITE
+                        this.textSize  = 50f
+                        typeface  = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                        style     = Paint.Style.FILL
+                        textAlign = Paint.Align.RIGHT
+                    }
+                    val itemStroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                        color       = Color.BLACK
+                        this.textSize    = 50f
+                        typeface    = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                        style       = Paint.Style.STROKE
+                        strokeWidth = 3f
+                        textAlign   = Paint.Align.RIGHT
+                    }
+
+                    // Draw the label inside the item, aligned to the right padding
+                    val px = itemRect.right - padding
+                    val py = itemRect.centerY() + itemFill.textSize/3
+                    canvas.drawText(label, px, py, itemStroke)
+                    canvas.drawText(label, px, py, itemFill)
+
+                    topY += itemHeight + spacing
+                }
+            }
+        }
+
+        // Draw UI (score, timer, level) at the bottom.
+        if (!levelCompleted && !levelFailed) {
+            // Define margins and bar dimensions.
+            val barMargin = 20f           // doubled from 20f.
+            val bottomMargin = 20f          // doubled from 20f.
+            // Using the factor from your previous code: (35f * 1.8f) was your base height; multiply by 2:
+            val barHeight = 35f * 2.8f  // same for each bar.
+            val gapBetweenBars = 16f        // doubled from 8f.
+            val barMaxWidth = width - 2 * barMargin
+
+            // Compute vertical positions for each bar. We want to show three bars (Level, Score, Time)
+            // stacked from top (highest bar) to bottom. The bottom bar (Time) sits above bottomMargin.
+            val timeBarTop = height - bottomMargin - barHeight
+            val scoreBarTop = timeBarTop - gapBetweenBars - barHeight
+            val levelBarTop = scoreBarTop - gapBetweenBars - barHeight
+
+
+            // --- SHIFT UP LEVEL & SCORE ---
+            canvas.save()
+            canvas.translate(0f, -bannerHeightPx)
+
+            // Level Bar (red)
+            val levelFraction = (currentLevel / 15f).coerceIn(0f, 1f)
+            val filledLevelWidth = levelFraction * barMaxWidth
+            val levelBarPaint = Paint().apply { color = Color.rgb(255, 150, 0) }
+            canvas.drawRect(barMargin, levelBarTop, barMargin + filledLevelWidth, levelBarTop + barHeight, levelBarPaint)
+
+            val levelTextFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.YELLOW
+                textSize = 70f
+                typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style = Paint.Style.FILL
+                textAlign = Paint.Align.LEFT
+            }
+            val levelTextStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.BLACK
+                textSize = 70f
+                typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style = Paint.Style.STROKE
+                strokeWidth = 4f
+                textAlign = Paint.Align.LEFT
+            }
+            canvas.drawText("Level: $currentLevel", barMargin + 20f, levelBarTop + barHeight - 20f, levelTextStrokePaint)
+            canvas.drawText("Level: $currentLevel", barMargin + 20f, levelBarTop + barHeight - 20f, levelTextFillPaint)
+
+            // Score Bar (blue)
+            val scoreFraction = (overallScore / 100000f).coerceIn(0f, 1f)
+            val filledScoreWidth = scoreFraction * barMaxWidth
+            val scoreBarPaint = Paint().apply { color = Color.BLUE }
+            canvas.drawRect(barMargin, scoreBarTop, barMargin + filledScoreWidth, scoreBarTop + barHeight, scoreBarPaint)
+            val scoreTextFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.WHITE
+                textSize = 70f
+                typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style = Paint.Style.FILL
+                textAlign = Paint.Align.LEFT
+            }
+            val scoreTextStrokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = Color.BLACK
+                textSize = 70f
+                typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style = Paint.Style.STROKE
+                strokeWidth = 4f
+                textAlign = Paint.Align.LEFT
+            }
+            canvas.drawText("Score: $overallScore", barMargin + 20f, scoreBarTop + barHeight - 20f, scoreTextStrokePaint)
+            canvas.drawText("Score: $overallScore", barMargin + 20f, scoreBarTop + barHeight - 20f, scoreTextFillPaint)
+
+
+            // Time Bar (interpolated color)
+            val currentTime = System.currentTimeMillis()
+            // if timerPaused, use the frozen pausedElapsed; otherwise use the live clock
+            val rawElapsed = if (timerPaused) {
+                pausedElapsed.toFloat() / 1000f
+            } else {
+                (currentTime - levelStartTime).toFloat() / 1000f
+            }
+            val elapsedTime = if (currentLevel == 1 && !timerStarted) 0f else rawElapsed
+            val effectiveElapsed = if (elapsedTime > levelTimeLimit) levelTimeLimit.toFloat() else elapsedTime
+            levelTimer = (levelTimeLimit - effectiveElapsed).toInt()
+
+            // Compute timeFraction clamped to [0,1].
+            val timeFraction = ((levelTimeLimit - effectiveElapsed) / levelTimeLimit).coerceIn(0f, 1f)
+
+            val filledTimeWidth = timeFraction * barMaxWidth
+
+            fun interpolateColor(start: Int, end: Int, fraction: Float): Int {
+                val a = Color.alpha(start) + ((Color.alpha(end) - Color.alpha(start)) * fraction).toInt()
+                val r = Color.red(start) + ((Color.red(end) - Color.red(start)) * fraction).toInt()
+                val g = Color.green(start) + ((Color.green(end) - Color.green(start)) * fraction).toInt()
+                val b = Color.blue(start) + ((Color.blue(end) - Color.blue(start)) * fraction).toInt()
+                return Color.argb(a, r, g, b)
+            }
+            val green = Color.GREEN
+            val yellow = Color.YELLOW
+            val orange = Color.rgb(255, 165, 0)
+            val red = Color.RED
+            val timeBarColor: Int = when {
+                timeFraction >= 0.66f -> {
+                    val localFrac = (timeFraction - 0.66f) / (1f - 0.66f)
+                    interpolateColor(yellow, green, localFrac)
+                }
+                timeFraction >= 0.33f -> {
+                    val localFrac = (timeFraction - 0.33f) / (0.66f - 0.33f)
+                    interpolateColor(orange, yellow, localFrac)
+                }
+                else -> {
+                    val localFrac = timeFraction / 0.33f
+                    interpolateColor(red, orange, localFrac)
+                }
+            }
+            val timeBarPaint = Paint().apply { color = timeBarColor }
+            canvas.drawRect(barMargin, timeBarTop, barMargin + filledTimeWidth, timeBarTop + barHeight, timeBarPaint)
+
+            val timeTextFillPaint = Paint().apply {
+                color = Color.RED
+                textSize = 70f
+                typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style = Paint.Style.FILL
+                textAlign = Paint.Align.LEFT
+            }
+            val timeTextStrokePaint = Paint().apply {
+                color = Color.BLACK
+                textSize = 70f
+                typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
+                style = Paint.Style.STROKE
+                strokeWidth = 4f
+                textAlign = Paint.Align.LEFT
+            }
+            canvas.drawText("Time: $levelTimer", barMargin + 20f, timeBarTop + barHeight - 20f, timeTextStrokePaint)
+            canvas.drawText("Time: $levelTimer", barMargin + 20f, timeBarTop + barHeight - 20f, timeTextFillPaint)
+
+            canvas.restore()
+        }
+
+
+        // Update game state if not paused.
+        if (!startDialogShowing && (!gamePaused || levelFailed)) {
+            updateGameState(canvas)
+        }
+
+        // draw & advance all floating scores
+        val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.STROKE; strokeWidth = 3f; color = Color.BLACK
+        }
+        val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            style = Paint.Style.FILL
+        }
+
+        val iter = floatingScores.iterator()
+        while (iter.hasNext()) {
+            val fs = iter.next()
+
+            // set current paint state
+            stroke.textSize = fs.size
+            stroke.alpha    = fs.alpha
+            fill.textSize   = fs.size
+            fill.alpha      = fs.alpha
+            fill.color      = fs.color
+
+            // draw stroke then fill
+            canvas.drawText(fs.text, fs.x, fs.y, stroke)
+            canvas.drawText(fs.text, fs.x, fs.y, fill)
+
+            // advance position & fade & grow
+            fs.x    += fs.dx      // horizontal drift
+            fs.y    += fs.dy      // vertical drift (negative dy → upward)
+            fs.alpha = (fs.alpha - 2).coerceAtLeast(0)  // fade 2 units/frame (slower)
+            fs.size  *= 1.02f     // grow 2% per frame
+
+            // remove when invisible
+            if (fs.alpha == 0) iter.remove()
+        }
+
+        // Draw balls.
+        for (ball in balls) {
+            if (!ball.active) continue
+            val shadowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.argb(80, 0, 0, 0) }
+            val shadowOffset = ball.radius / 3
+            canvas.drawCircle(ball.x + shadowOffset, ball.y + shadowOffset, ball.radius, shadowPaint)
+            val ballPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+            ballPaint.shader = RadialGradient(
+                ball.x - ball.radius / 4,
+                ball.y - ball.radius / 4,
+                ball.radius,
+                intArrayOf(Color.WHITE, Color.DKGRAY),
+                floatArrayOf(0.3f, 1f),
+                Shader.TileMode.CLAMP
+            )
+            canvas.drawCircle(ball.x, ball.y, ball.radius, ballPaint)
+        }
+        postInvalidateOnAnimation()
+    }

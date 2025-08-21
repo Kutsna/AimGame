@@ -1,0 +1,50 @@
+fun getRefundInfo(onResult: (RefundInfo) -> Unit) {
+        val purchasesParams = QueryPurchasesParams.newBuilder()
+            .setProductType(BillingClient.ProductType.INAPP)
+            .build()
+
+        billingClient.queryPurchasesAsync(purchasesParams) { br, purchases ->
+            if (br.responseCode != BillingClient.BillingResponseCode.OK) {
+                Log.w(TAG, "getRefundInfo: queryPurchasesAsync failed: ${br.responseCode} ${br.debugMessage}")
+                val fallbackOwned = removeAds
+                onResult(RefundInfo(refunded = false, ownedNow = fallbackOwned, previouslyOwned = false))
+                return@queryPurchasesAsync
+            }
+
+            val ownedNow = purchases.any { p ->
+                p.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                        p.products.any { it == SKU_REMOVE_ADS }
+            }
+
+            val histParams = QueryPurchaseHistoryParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+
+            billingClient.queryPurchaseHistoryAsync(histParams) { hr, records ->
+                if (hr.responseCode != BillingClient.BillingResponseCode.OK) {
+                    Log.w(TAG, "getRefundInfo: history failed: ${hr.responseCode} ${hr.debugMessage}")
+                }
+
+                val previouslyOwned = records?.any { r -> r.products.any { it == SKU_REMOVE_ADS } } == true
+                val refunded = previouslyOwned && !ownedNow
+
+                Log.i(TAG, "getRefundInfo[ADS]: ownedNow=$ownedNow, previouslyOwned=$previouslyOwned, refunded=$refunded")
+
+                if (refunded && removeAds) {
+                    removeAds = false
+                    activity.getSharedPreferences("billing_prefs", Activity.MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("remove_ads", false)
+                        .putBoolean("remove_timer", false)
+                        .apply()
+                    (activity as? MainActivity)?.onEntitlementsUpdated(removeAds, false)
+                    applyEntitlements()
+                    gameView.postInvalidateOnAnimation()
+                }
+
+                activity.runOnUiThread {
+                    onResult(RefundInfo(refunded = refunded, ownedNow = ownedNow, previouslyOwned = previouslyOwned))
+                }
+            }
+        }
+    }

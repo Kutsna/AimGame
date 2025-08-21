@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AimGame</string>
+    <string name="privacy_policy"><![CDATA[
+This Privacy Policy describes how AimGame (“we”, “our” or “the App”) collects, uses, and discloses information when you use the AimGame mobile application (the “App”) on Android devices. By downloading, installing, or using the App, you agree to the terms of this Privacy Policy.\n
+\n
+\n
+1. Information We Collect
+\n
+\n
+1.1 Local Data
+Game Settings & Progress
+\n
+High scores, current level, sound on/off preferences and other gameplay settings are stored locally on your device in Android’s SharedPreferences.
+\n
+This data is never uploaded to our servers or shared with any third party.
+\n\n
+1.2 Advertising & Analytics Data
+\n
+AimGame integrates Google AdMob to display ads. To serve personalized ads, AdMob may collect:
+\n
+Android Advertising ID (AAID) and related device identifiers
+\n
+Device & OS characteristics (model, OS version, language, screen resolution)
+\n
+IP address (handled and stored by Google’s servers)
+\n
+Basic ad-viewing events (e.g. which ads you saw, when you tapped an ad)
+\n
+All ad and analytics data collection is governed by Google’s own privacy policy. We do not receive or store your Advertising ID or IP address ourselves.
+\n\n
+2. How We Use Information
+\n
+Local Preferences & Progress
+\n
+To restore your game session, settings, and high scores when you relaunch the App.
+\n
+Advertisements
+\n
+To request and display ads via AdMob.
+\n\n
+3. Third-Party Services
+\n
+We use the following third-party services, each with its own privacy practices:
+\n
+Google AdMob for banner and interstitial ads.
+\n
+We encourage you to review the privacy policies of these services for more detail:
+\n
+Google Privacy & Terms: https://policies.google.com/privacy
+\n\n
+4. Children’s Privacy
+\n
+AimGame is not directed to children under the age of 13. We do not knowingly collect or solicit personal information from anyone under 13. If you are a parent or guardian and believe your child has provided us with personal data, please contact us to have that information deleted.
+\n\n
+5. Data Security
+\n
+We follow industry-standard practices to safeguard data stored on your device. However, no method of transmission or electronic storage is 100% secure. We cannot guarantee absolute security.
+\n\n
+6. Changes to This Privacy Policy
+\n
+We may update this Privacy Policy from time to time. When we do, we will revise the “Last updated” date. We encourage you to review this page periodically to stay informed of any changes.
+\n\n
+7. Contact Us
+\n
+If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:
+\n
+VERYEASYGAMES
+   Email: support@veryeasy.games
+   Address: 5 Tskneti turn, Tbilisi, Georgia
+
+Thank you for playing AimGame! We value your privacy and strive to provide you with a fun and safe gaming experience.
+
+    ]]></string>
+
+    <string name="terms_of_use"><![CDATA[
+TERMS OF SERVICE
+Last updated: June 18, 2025
+\n\n
+1. License Grant \n
+   VERYEASYGAMES grants you a non-exclusive, non-transferable, revocable license to use the Services for personal, non-commercial purposes.
+\n\n
+2. Restrictions
+You agree not to, and will not permit others to:
+\n
+Modify, reverse engineer, decompile, or disassemble the App (except to the extent permitted by applicable law).
+\n
+Rent, lease, lend, sell, redistribute or sublicense the App.
+\n
+Remove any proprietary notices or labels in the App.
+\n
+Use the App in any unlawful manner or for any unlawful purpose.
+\n\n
+3. Your Account & Progress \n
+No account or personal registration is required to play AimGame. All progress (levels, scores, settings) is stored locally on your device.
+\n
+We are not responsible for loss or corruption of your local game data; if you uninstall the App or clear its data, your progress may be lost.
+\n
+If you sign in with a Google account, you agree to Google’s terms: https://policies.google.com/terms
+\n\n
+4. Ads & Monetization, in-App Advertising
+\n
+The App displays ads served by Google AdMob.
+\n
+The App is supported by Google AdMob ads
+\n
+Clicking ads is governed by those third-party policies
+\n
+You consent to AdMob’s collection and use of data (including Advertising ID) as described in our Privacy Policy.
+\n
+We do not control which ads are shown; any ad content is the responsibility of the advertiser.
+\n\n
+5. Ownership & Intellectual Property
+\n
+The App and all related content (graphics, code, audio, text) are owned by VERYEASYGAMES or its licensors and are protected by copyright, trademark, and other laws.
+\n
+All rights not expressly granted to you are reserved by VERYEASYGAMES.
+\n\n
+6. Disclaimers
+\n
+THE APP IS PROVIDED “AS IS” AND “AS AVAILABLE,” WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED.
+\n
+We do not warrant that the App will meet your requirements, run uninterrupted or error-free, or be free of bugs or viruses.
+\n
+We disclaim all implied warranties, including merchantability, fitness for a particular purpose, and non-infringement to the fullest extent permitted by law.
+\n\n
+7. Limitation of Liability
+\n
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL VERYEASYGAMES BE LIABLE FOR
+\n
+ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES,
+\n
+LOSS OF PROFITS OR REVENUE,
+\n
+LOSS OF DATA, OR
+\n
+PERSONAL INJURY OR PROPERTY DAMAGE
+ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE APP, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+\n\n
+8. Indemnification
+\n
+You agree to indemnify, defend, and hold harmless VERYEASYGAMES and its officers, directors, employees and agents from any claims, liabilities, damages, losses or expenses (including reasonable attorneys’ fees) arising out of your use of the App or your violation of these Terms.
+\n\n
+9. Termination
+\n
+We may suspend or terminate these Terms and your access to the App at any time, with or without notice, for any reason, including if you breach any provision of these Terms. Upon termination, the license granted in Section 1 will immediately cease, and you must uninstall the App.
+\n\n
+10. Changes to These Terms
+\n
+We may update these Terms from time to time. When we do, we will revise the “Last updated” date above. Continued use of the App after changes constitutes your acceptance of the new Terms.
+\n\n
+11. Governing Law & Dispute Resolution
+\n
+These Terms shall be governed by and construed in accordance with the laws of the Republic of Georgia, without regard to its conflict of law provisions. Any dispute arising under or relating in any way to these Terms or your use of the App will be resolved exclusively in the state or federal courts located in Tbilisi, Georgia, and you consent to jurisdiction there.
+\n\n
+12. Entire Agreement
+\n
+These Terms, together with our Privacy Policy, constitute the entire agreement between you and VERYEASYGAMES with respect to the App and supersede all prior or contemporaneous understandings.
+\n\n
+Contact Us
+\n
+If you have any questions about these Terms, please contact us at:
+\n
+support@veryeasy.games
+
+    ]]></string>
+
+<string name="how_to_play"><![CDATA[
+
+   Try to snap the balls into the holes by tilting your gadget, not by touching the screen.
+\n\n
+   Be patient. Try the fine moves, do not tilt you gadget very much.
+\n\n
+   The largest ball goes to the center red hole. The second largest balls go to the second rings holes, the third largest to the third rings holes and so on.
+You get points for each hit.
+\n\n
+   You can adjust the Set Tilt, that is in the right side of the Aim, so that you could play not only on the flat held gadget.
+For this, hold the gadget comfortably and click the Set Tilt which is at the right edge of the screen.
+You will feel the tilt difference.
+\n\n
+   After every next level the game gets more difficult.
+From Level 11 the balls may be snapped out from the holes if they are touched by other balls.
+From Level 11 the timer gets in. If you could not snap all the balls in time, the Level restarts at the last successful Level score.
+\n\n
+   Good Luck!
+
+    ]]></string>
+
+</resources>

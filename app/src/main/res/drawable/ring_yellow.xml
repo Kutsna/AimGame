@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="110dp"
+    android:height="110dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Center at (40,40), effective radius = 40 - (6/2)=37 -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="#FFFF00"
+        android:strokeWidth="23"
+        android:pathData="
+                M54,14
+                a40,40 0 1,0 0,80
+                a40,40 0 1,0 0,-80
+                Z"/>
+
+    <group
+        android:translateX="78"
+        android:translateY="78">
+        <path
+            android:fillColor="@android:color/transparent"
+            android:strokeColor="#1582bd"
+            android:strokeWidth="3"
+            android:pathData="
+                M2,0
+                a1,1 0 1,1 0,7.5
+                a1,1 0 1,1 0,-7.5
+                Z" />
+    </group>
+
+</vector>

@@ -1,0 +1,27 @@
+*.iml
+# Gradle
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configs & secrets
+local.properties
+*.jks
+*.keystore
+key.properties
+
+# Android Studio
+.idea/
+!.idea/codeStyles/
+!.idea/inspectionProfiles/
+captures/
+
+# Logs & misc
+*.log
+*.iml
+.DS_Store
+
+# Google/Firebase (decide for your team)
+# google-services.json        # (uncomment to ignore if you don't want it in git)
+# GoogleService-Info.plist

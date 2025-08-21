@@ -1,0 +1,31 @@
+That log line means your app asked Play “what do I own right now?” and Play answered: “still owned.”
+ownedNow=true comes from queryPurchasesAsync (current ownership). So your code is working; Play still considers the SKU purchased.
+
+Why this happens (most common reasons):
+
+You refunded without revoking entitlement
+In Play, a plain refund returns the money but can leave the entitlement active. To actually remove access you must refund + revoke (via the Developer API’s orders.refund with revoke=true; some UIs expose a “Remove entitlement / Revoke” option). If you refund only, queryPurchasesAsync will keep reporting it as owned. 
+Android Developers
+Google for Developers
+
+Propagation delay
+It can take minutes (sometimes longer) before the entitlement change reaches devices. Your app should re-query on foreground and before showing the buy dialog.
+
+Testing gotcha
+Make sure the device is on the same Google account that bought/refunded and that the app is Play-installed (Internal testing/App Sharing). Sideloaded installs won’t give reliable billing results.
+
+What to do now (quick path):
+
+Try revoke:
+
+If the Console shows a “Refund and revoke/Remove entitlement” option on that order, use it.
+
+If not, use the Google Play Developer API: call orders.refund with revoke=true for the order ID (use the API Explorer in the docs). After that, bring the app to foreground to re-query. 
+Android Developers
+
+Keep re-querying: you already have getRefundInfo/resyncEntitlements. Call it in onResume() and right before you decide whether to show “Unlock Premium”. When ownedNow finally flips to false, your code will set removeAds=false and removeTimeLimit=false and the Unlock option will appear.
+
+Tip: log the order ID and purchase token you refunded, and make sure it’s the same one your app is seeing. That avoids chasing the wrong transaction.
+
+
+

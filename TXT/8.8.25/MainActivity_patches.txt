@@ -1,0 +1,42 @@
+// === PATCH: Read entitlements early in onCreate() ===
+val entPrefs = getSharedPreferences("billing_prefs", MODE_PRIVATE)
+removeAds       = entPrefs.getBoolean("remove_ads", false)
+removeTimeLimit = entPrefs.getBoolean("remove_timer", false)
+
+// Make sure GameView is initialized before these lines or set them right after you create it:
+gameView.removeAds = removeAds
+gameView.removeTimeLimit = removeTimeLimit
+
+// === PATCH: Add this method to MainActivity ===
+fun onEntitlementsUpdated(removeAds: Boolean, removeTimer: Boolean) {
+    this.removeAds = removeAds
+    this.removeTimeLimit = removeTimer
+    gameView.removeAds = removeAds
+    gameView.removeTimeLimit = removeTimer
+    if (removeAds) hideAllAds()
+}
+
+// === PATCH: Guard every ad load/show ===
+// Example places:
+// 1) Where you initially load banners:
+if (!removeAds) {
+    bannerA.loadAd(AdRequest.Builder().build())
+    bannerB.loadAd(AdRequest.Builder().build())
+    handler.postDelayed(reloadBannerRunnable, 65_000)
+} else {
+    hideAllAds()
+}
+
+// 2) onStart() where you load interstitial:
+if (interstitialAd == null && !removeAds) {
+    loadInterstitialAd()
+}
+
+// 3) onLevelStarted()/Completed()/Failed() before showing interstitial or reloading banners:
+if (!removeAds) {
+    interstitialAd?.show(this)
+    bannerA.visibility = View.VISIBLE
+    bannerB.visibility = View.VISIBLE
+    bannerA.bringToFront()
+    bannerB.bringToFront()
+}

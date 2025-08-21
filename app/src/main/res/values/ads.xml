@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Replace with YOUR real AdMob ad unit IDs -->
+    <string name="admob_bannerA_id">ca-app-pub-5967101454574410/2297086115</string>
+    <string name="admob_bannerB_id">ca-app-pub-5967101454574410/2297086115</string>
+    <string name="admob_interstitial_id">ca-app-pub-5967101454574410/6260381850</string>
+</resources>

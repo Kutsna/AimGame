@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "728242057749",
+    "project_id": "aimgame-5c28a",
+    "storage_bucket": "aimgame-5c28a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728242057749:android:b9de54cdb3cdf0fd0d941c",
+        "android_client_info": {
+          "package_name": "com.veryeasygames.aimgame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6Uz43QsF-CAM_7XtI4eqQhbs93TJhKvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

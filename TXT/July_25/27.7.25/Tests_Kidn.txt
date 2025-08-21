@@ -1,0 +1,22 @@
+Ultrasound Elastography (e.g., Shear Wave Elastography - SWE, Acoustic Radiation Force Impulse - ARFI):
+
+
+TGF-\beta - Transforming Growth Factor-beta: A key mediator of fibrosis. For understanding the broader context of tissue remodeling and fibrosis, TGF-β and MMPs/TIMPs are crucial, though their interpretation can be more complex due to their multifaceted roles.
+
+PIIINP - Procollagen Type III N-terminal Peptide: For monitoring ongoing collagen synthesis and fibrosis progression/regression, PIIINP is a very direct and reliable marker.
+
+KIM-1 and NGAL - Kidney Injury Molecule-1 and Neutrophil Gelatinase-Associated Lipocalin: Markers of tubular injury, which often accompanies interstitial fibrosis. For early detection of acute kidney injury and tubular damage, KIM-1 and NGAL are highly effective and reliable.
+
+
+MCP-1 - Monocyte Chemoattractant Protein-1: For assessing inflammation and immune cell recruitment, MCP-1 is highly effective.
+
+MMPs and TIMPs - Matrix Metalloproteinases and Tissue Inhibitors of Metalloproteinases: Involved in the breakdown and formation of the extracellular matrix.
+
+
+საერთო,
+CREA, 
+UREA,
+Cistatin C,
+C-React,
+Calcium,
+Vitamin D-25,

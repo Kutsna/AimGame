@@ -1,0 +1,7 @@
+When app starts:
+Check if the purchais of "remove_ads" are done and if true, assign "true" to "removeAds".
+Check if the purchais of "remove_timer" is done and if true, assign "true" to "removeTimer".
+Send "removeAds" and "removeTimer" to GameView.kt.
+If "removeAds == true" show no bannerA and no bannerB and no intersterstitial ads on the device from which the purchaise is done.
+If "removeTimer == true" show no Timer on the device from which the purchaise is done.
+Show me what to remove from current code.

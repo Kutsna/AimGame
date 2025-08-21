@@ -1,0 +1,64 @@
+// Middle Layer: Ring overlays, sized & centered proportionally
+ivRingViolet = ImageView(this).apply {
+    setImageResource(R.drawable.ring_violet)
+    scaleType = ImageView.ScaleType.FIT_CENTER
+}
+ivRingGold = ImageView(this).apply {
+    setImageResource(R.drawable.ring_gold)
+    scaleType = ImageView.ScaleType.FIT_CENTER
+}
+ivRingGreen = ImageView(this).apply {
+    setImageResource(R.drawable.ring_green)
+    scaleType = ImageView.ScaleType.FIT_CENTER
+}
+ivRingYellow = ImageView(this).apply {
+    setImageResource(R.drawable.ring_yellow)
+    scaleType = ImageView.ScaleType.FIT_CENTER
+}
+ivRingRed = ImageView(this).apply {
+    setImageResource(R.drawable.ring_red)
+    scaleType = ImageView.ScaleType.FIT_CENTER
+}
+
+// Compute ring size: 100 dp × (actual screen-width / 1080 dp)
+val dm        = resources.displayMetrics
+val screenW   = dm.widthPixels.toFloat()
+val designW   = 1080f
+val scaleF    = screenW / designW
+val baseRingDp = 100f
+val ringSizePx = (TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    baseRingDp,
+    dm
+) * scaleF).toInt()
+
+// Helper for centered LayoutParams
+fun centeredLp() =
+  FrameLayout.LayoutParams(ringSizePx, ringSizePx, Gravity.CENTER)
+
+// Add each ring with its own centered params
+frameLayout.addView(ivRingViolet, centeredLp())
+frameLayout.addView(ivRingGold,    centeredLp())
+frameLayout.addView(ivRingGreen,   centeredLp())
+frameLayout.addView(ivRingYellow,  centeredLp())
+frameLayout.addView(ivRingRed,     centeredLp())
+
+
+
+
+
+
+
+-----------------------
+
+// 2) Compute scaleFactor off your “design” baseline dp (1080dp)
+val scaleFactor = screenWidth / (1080f * dm.density)
+// 3) new helper: each view’s intrinsic size × scaleFactor
+fun computePosition(view: ImageView, fx: Float, fy: Float) {
+    // drawable.intrinsicWidth is in px (converted from the XML’s dp)
+    val intrinsicPx = view.drawable.intrinsicWidth.toFloat()
+    val boxSize    = intrinsicPx * scaleFactor
+    // center the box at (fx*W, fy*H)
+    view.x = screenWidth  * fx - boxSize/2f
+    view.y = screenHeight * fy - boxSize/2f
+}
